@@ -87,14 +87,10 @@ class CheckSession(Resource):
 @app.before_request
 def check_if_logged_in():
     if not session.get('user_id') \
+        and request.endpoint in ['member_article','member_index'] \
         and request.endpoint != 'login':
         return {'error': 'Unauthorized'}, 401
-    elif session.get('user_id') \
-        and request.endpoint != 'logout' \
-        and  request.endpoint != 'member_index'\
-        and request.endpoint != 'member_article':
-        return {'error': 'Unauthorized'}, 401
-
+    
 
 class MemberOnlyIndex(Resource):
     
